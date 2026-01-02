@@ -233,7 +233,7 @@ router.get('/expenses', protect, authorize('director', 'supervisor', 'student_af
 // @access  Private (Director, Supervisor, Student Affairs, Admin)
 router.post('/expenses', protect, authorize('director', 'supervisor', 'student_affairs', 'admin'), async (req, res) => {
     try {
-        const { type, description, amount, date, paidTo, notes } = req.body;
+        const { type, description, amount, date, paidTo, isPaid, notes } = req.body;
 
         const expense = await Expense.create({
             type,
@@ -241,6 +241,7 @@ router.post('/expenses', protect, authorize('director', 'supervisor', 'student_a
             amount,
             date: date || new Date(),
             paidTo,
+            isPaid: isPaid !== undefined ? isPaid : true,
             notes,
             createdBy: req.user._id
         });

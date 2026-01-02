@@ -72,9 +72,15 @@ app.use((err, req, res, next) => {
     console.error('SERVER_ERROR:', err);
 
     const response = {
+        success: false,
         message: 'حدث خطأ في الخادم',
         error: err.message
     };
+
+    // Add stack trace on Vercel for debugging 500 errors
+    if (process.env.VERCEL || process.env.NODE_ENV !== 'production') {
+        response.stack = err.stack;
+    }
 
     if (!process.env.MONGO_URI) {
         response.debug = 'MONGO_URI is missing in environment variables';

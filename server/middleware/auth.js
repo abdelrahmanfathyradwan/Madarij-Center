@@ -22,7 +22,7 @@ const protect = async (req, res, next) => {
             next();
         } catch (error) {
             console.error(error);
-            res.status(401).json({ message: 'غير مصرح - الرمز غير صالح' });
+            return res.status(401).json({ message: 'غير مصرح - الرمز غير صالح' });
         }
     }
 
@@ -34,9 +34,9 @@ const protect = async (req, res, next) => {
 // Role-based access control
 const authorize = (...roles) => {
     return (req, res, next) => {
-        if (!roles.includes(req.user.role)) {
+        if (!req.user || !roles.includes(req.user.role)) {
             return res.status(403).json({
-                message: `الدور ${req.user.role} غير مصرح له بالوصول إلى هذا المسار`
+                message: `الدور ${req.user ? req.user.role : 'غير معروف'} غير مصرح له بالوصول إلى هذا المسار`
             });
         }
         next();
