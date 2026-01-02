@@ -11,8 +11,10 @@ import {
     Loader2,
     AlertCircle
 } from 'lucide-react';
-import { AttendanceStatus, Student } from '../types';
+import type { AttendanceStatus, Student } from '../types';
 import { API_BASE_URL } from '../api/config';
+import SessionTimeline from '../components/session/SessionTimeline';
+import AttendanceStudentRow from '../components/attendance/AttendanceStudentRow';
 
 interface AttendanceRecord {
     student: string;
