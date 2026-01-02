@@ -1,7 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
-import type { Student } from '../../types';
+import { API_BASE_URL } from '../../api/config';
+import type { Student, Guardian } from '../../types';
 import type { RootState } from '../store';
 
 interface StudentsState {
@@ -24,7 +25,7 @@ export const fetchStudents = createAsyncThunk(
         try {
             const token = (getState() as RootState).auth.token;
             const config = { headers: { Authorization: `Bearer ${token}` } };
-            let url = '/api/students';
+            let url = `${API_BASE_URL}/api/students`;
             if (filters) {
                 const params = new URLSearchParams();
                 if (filters.halqa) params.append('halqa', filters.halqa);
@@ -45,7 +46,7 @@ export const fetchStudentsByHalqa = createAsyncThunk(
         try {
             const token = (getState() as RootState).auth.token;
             const config = { headers: { Authorization: `Bearer ${token}` } };
-            const response = await axios.get(`/api/students/halqa/${halqaId}`, config);
+            const response = await axios.get(`${API_BASE_URL}/api/students/halqa/${halqaId}`, config);
             return response.data.students;
         } catch (error: any) {
             return rejectWithValue(error.response?.data?.message || 'فشل تحميل طلاب الحلقة');
@@ -59,7 +60,7 @@ export const createStudent = createAsyncThunk(
         try {
             const token = (getState() as RootState).auth.token;
             const config = { headers: { Authorization: `Bearer ${token}` } };
-            const response = await axios.post('/api/students', studentData, config);
+            const response = await axios.post(`${API_BASE_URL}/api/students`, studentData, config);
             return response.data.student;
         } catch (error: any) {
             return rejectWithValue(error.response?.data?.message || 'فشل تسجيل الطالب');
@@ -73,7 +74,7 @@ export const updateStudent = createAsyncThunk(
         try {
             const token = (getState() as RootState).auth.token;
             const config = { headers: { Authorization: `Bearer ${token}` } };
-            const response = await axios.put(`/api/students/${id}`, data, config);
+            const response = await axios.put(`${API_BASE_URL}/api/students/${id}`, data, config);
             return response.data.student;
         } catch (error: any) {
             return rejectWithValue(error.response?.data?.message || 'فشل تحديث بيانات الطالب');
@@ -87,7 +88,7 @@ export const deleteStudent = createAsyncThunk(
         try {
             const token = (getState() as RootState).auth.token;
             const config = { headers: { Authorization: `Bearer ${token}` } };
-            await axios.delete(`/api/students/${id}`, config);
+            await axios.delete(`${API_BASE_URL}/api/students/${id}`, config);
             return id;
         } catch (error: any) {
             return rejectWithValue(error.response?.data?.message || 'فشل حذف الطالب');

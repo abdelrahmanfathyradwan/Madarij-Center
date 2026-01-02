@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { API_BASE_URL } from '../../api/config';
 import type { Halqa } from '../../types';
 import type { RootState } from '../store';
 
@@ -24,7 +25,7 @@ export const fetchHalqat = createAsyncThunk(
         try {
             const token = (getState() as RootState).auth.token;
             const config = { headers: { Authorization: `Bearer ${token}` } };
-            const response = await axios.get('/api/halqat', config);
+            const response = await axios.get(`${API_BASE_URL}/api/halqat`, config);
             return response.data.halqat;
         } catch (error: any) {
             return rejectWithValue(error.response?.data?.message || 'فشل تحميل الحلقات');
@@ -38,7 +39,7 @@ export const fetchHalqa = createAsyncThunk(
         try {
             const token = (getState() as RootState).auth.token;
             const config = { headers: { Authorization: `Bearer ${token}` } };
-            const response = await axios.get(`/api/halqat/${id}`, config);
+            const response = await axios.get(`${API_BASE_URL}/api/halqat/${id}`, config);
             return response.data.halqa;
         } catch (error: any) {
             return rejectWithValue(error.response?.data?.message || 'فشل تحميل الحلقة');
@@ -52,7 +53,7 @@ export const createHalqa = createAsyncThunk(
         try {
             const token = (getState() as RootState).auth.token;
             const config = { headers: { Authorization: `Bearer ${token}` } };
-            const response = await axios.post('/api/halqat', halqaData, config);
+            const response = await axios.post(`${API_BASE_URL}/api/halqat`, halqaData, config);
             return response.data.halqa;
         } catch (error: any) {
             return rejectWithValue(error.response?.data?.message || 'فشل إنشاء الحلقة');

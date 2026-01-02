@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { API_BASE_URL } from '../../api/config';
 import type { User } from '../../types';
 
 interface AuthState {
@@ -24,7 +25,7 @@ export const login = createAsyncThunk(
     'auth/login',
     async (credentials: { email: string; password: string }, { rejectWithValue }) => {
         try {
-            const response = await axios.post('/api/auth/login', credentials);
+            const response = await axios.post(`${API_BASE_URL}/api/auth/login`, credentials);
             const { token, user } = response.data;
             localStorage.setItem('token', token);
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -44,7 +45,7 @@ export const getCurrentUser = createAsyncThunk(
             if (state.auth.token) {
                 axios.defaults.headers.common['Authorization'] = `Bearer ${state.auth.token}`;
             }
-            const response = await axios.get('/api/auth/me');
+            const response = await axios.get(`${API_BASE_URL}/api/auth/me`);
             return response.data.user;
         } catch (error: any) {
             localStorage.removeItem('token');

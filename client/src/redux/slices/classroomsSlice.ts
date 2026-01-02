@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { API_BASE_URL } from '../../api/config';
 import type { Classroom } from '../../types';
 import type { RootState } from '../store';
 
@@ -21,7 +22,7 @@ export const fetchClassrooms = createAsyncThunk(
         try {
             const token = (getState() as RootState).auth.token;
             const config = { headers: { Authorization: `Bearer ${token}` } };
-            const response = await axios.get('/api/classrooms', config);
+            const response = await axios.get(`${API_BASE_URL}/api/classrooms`, config);
             return response.data.classrooms;
         } catch (error: any) {
             return rejectWithValue(error.response?.data?.message || 'فشل تحميل الفصول');

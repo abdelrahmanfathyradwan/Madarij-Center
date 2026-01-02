@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { API_BASE_URL } from '../../api/config';
 import type { Session, Attendance, Performance } from '../../types';
 import type { RootState } from '../store';
 
@@ -27,7 +28,7 @@ export const fetchSessions = createAsyncThunk(
                 headers: { Authorization: `Bearer ${token}` },
                 params: { startDate, endDate }
             };
-            const response = await axios.get('/api/sessions', config);
+            const response = await axios.get(`${API_BASE_URL}/api/sessions`, config);
             return response.data.sessions;
         } catch (error: any) {
             return rejectWithValue(error.response?.data?.message || 'فشل تحميل الجلسات');
@@ -69,7 +70,7 @@ export const createSession = createAsyncThunk(
         try {
             const token = (getState() as RootState).auth.token;
             const config = { headers: { Authorization: `Bearer ${token}` } };
-            const response = await axios.post('/api/sessions', sessionData, config);
+            const response = await axios.post(`${API_BASE_URL}/api/sessions`, sessionData, config);
             return response.data.session;
         } catch (error: any) {
             return rejectWithValue(error.response?.data?.message || 'فشل إنشاء الجلسة');
