@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { API_BASE_URL } from '../../api/config';
 import type { User } from '../../types';
 
 import type { RootState } from '../store';
@@ -27,7 +28,7 @@ export const fetchUsers = createAsyncThunk(
             const token = (getState() as RootState).auth.token;
             const config = { headers: { Authorization: `Bearer ${token}` } };
             const query = role ? `?role=${role}` : '';
-            const response = await axios.get(`/api/users${query}`, config);
+            const response = await axios.get(`${API_BASE_URL}/api/users${query}`, config);
             return { users: response.data.users, role };
         } catch (error: any) {
             return rejectWithValue(error.response?.data?.message || 'فشل تحميل المستخدمين');

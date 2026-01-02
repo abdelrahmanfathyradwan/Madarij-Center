@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { API_BASE_URL } from '../../api/config';
 import type { Student, Interview } from '../../types';
 import type { RootState } from '../store';
 
@@ -27,7 +28,7 @@ export const fetchPendingApplications = createAsyncThunk(
         try {
             const token = (getState() as RootState).auth.token;
             const config = { headers: { Authorization: `Bearer ${token}` } };
-            const response = await axios.get('/api/onboarding/pending', config);
+            const response = await axios.get(`${API_BASE_URL}/api/onboarding/pending`, config);
             return response.data.students;
         } catch (error: any) {
             return rejectWithValue(error.response?.data?.message || 'فشل تحميل الطلبات');
@@ -42,7 +43,7 @@ export const fetchScheduledInterviews = createAsyncThunk(
         try {
             const token = (getState() as RootState).auth.token;
             const config = { headers: { Authorization: `Bearer ${token}` } };
-            const response = await axios.get('/api/onboarding/interviews', config);
+            const response = await axios.get(`${API_BASE_URL}/api/onboarding/interviews`, config);
             return response.data.interviews;
         } catch (error: any) {
             return rejectWithValue(error.response?.data?.message || 'فشل تحميل المقابلات');
@@ -57,7 +58,7 @@ export const createApplication = createAsyncThunk(
         try {
             const token = (getState() as RootState).auth.token;
             const config = { headers: { Authorization: `Bearer ${token}` } };
-            const response = await axios.post('/api/onboarding/new', data, config);
+            const response = await axios.post(`${API_BASE_URL}/api/onboarding/new`, data, config);
             return response.data.student;
         } catch (error: any) {
             return rejectWithValue(error.response?.data?.message || 'فشل تسجيل الطالب');
@@ -72,7 +73,7 @@ export const markFormGiven = createAsyncThunk(
         try {
             const token = (getState() as RootState).auth.token;
             const config = { headers: { Authorization: `Bearer ${token}` } };
-            const response = await axios.put(`/api/onboarding/${studentId}/form-given`, {}, config);
+            const response = await axios.put(`${API_BASE_URL}/api/onboarding/${studentId}/form-given`, {}, config);
             return response.data.student;
         } catch (error: any) {
             return rejectWithValue(error.response?.data?.message || 'فشل تحديث الحالة');
@@ -87,7 +88,7 @@ export const submitForm = createAsyncThunk(
         try {
             const token = (getState() as RootState).auth.token;
             const config = { headers: { Authorization: `Bearer ${token}` } };
-            const response = await axios.put(`/api/onboarding/${studentId}/form-submitted`, data, config);
+            const response = await axios.put(`${API_BASE_URL}/api/onboarding/${studentId}/form-submitted`, data, config);
             return response.data.student;
         } catch (error: any) {
             return rejectWithValue(error.response?.data?.message || 'فشل تقديم الاستمارة');
@@ -102,7 +103,7 @@ export const scheduleInterview = createAsyncThunk(
         try {
             const token = (getState() as RootState).auth.token;
             const config = { headers: { Authorization: `Bearer ${token}` } };
-            const response = await axios.post(`/api/onboarding/${studentId}/schedule-interview`, {}, config);
+            const response = await axios.post(`${API_BASE_URL}/api/onboarding/${studentId}/schedule-interview`, {}, config);
             return { student: response.data.student, interview: response.data.interview };
         } catch (error: any) {
             return rejectWithValue(error.response?.data?.message || 'فشل جدولة المقابلة');
@@ -117,7 +118,7 @@ export const setInterviewResult = createAsyncThunk(
         try {
             const token = (getState() as RootState).auth.token;
             const config = { headers: { Authorization: `Bearer ${token}` } };
-            const response = await axios.put(`/api/onboarding/${studentId}/interview-result`, { result, notes, halqa }, config);
+            const response = await axios.put(`${API_BASE_URL}/api/onboarding/${studentId}/interview-result`, { result, notes, halqa }, config);
             return response.data.student;
         } catch (error: any) {
             return rejectWithValue(error.response?.data?.message || 'فشل تحديث نتيجة المقابلة');

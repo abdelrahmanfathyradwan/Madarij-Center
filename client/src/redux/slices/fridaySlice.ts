@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { API_BASE_URL } from '../../api/config';
 import type { FridayConfig, FridaySchedule } from '../../types';
 import type { RootState } from '../store';
 
@@ -27,7 +28,7 @@ export const fetchFridayConfig = createAsyncThunk(
         try {
             const token = (getState() as RootState).auth.token;
             const config = { headers: { Authorization: `Bearer ${token}` } };
-            const response = await axios.get('/api/friday/config', config);
+            const response = await axios.get(`${API_BASE_URL}/api/friday/config`, config);
             return response.data.config;
         } catch (error: any) {
             return rejectWithValue(error.response?.data?.message || 'فشل تحميل إعدادات الجمعة');
@@ -42,7 +43,7 @@ export const fetchFridaySchedule = createAsyncThunk(
         try {
             const token = (getState() as RootState).auth.token;
             const config = { headers: { Authorization: `Bearer ${token}` } };
-            const response = await axios.get('/api/friday/schedule', config);
+            const response = await axios.get(`${API_BASE_URL}/api/friday/schedule`, config);
             return {
                 schedule: response.data.schedule,
                 isRecreationalDay: response.data.isRecreationalDay
@@ -60,7 +61,7 @@ export const setRecreationalDay = createAsyncThunk(
         try {
             const token = (getState() as RootState).auth.token;
             const config = { headers: { Authorization: `Bearer ${token}` } };
-            const response = await axios.put('/api/friday/recreational', { isRecreational }, config);
+            const response = await axios.put(`${API_BASE_URL}/api/friday/recreational`, { isRecreational }, config);
             return { success: true, message: response.data.message, isRecreational };
         } catch (error: any) {
             return rejectWithValue(error.response?.data?.message || 'فشل تحديث الإعدادات');
@@ -75,7 +76,7 @@ export const generateFridaySessions = createAsyncThunk(
         try {
             const token = (getState() as RootState).auth.token;
             const config = { headers: { Authorization: `Bearer ${token}` } };
-            const response = await axios.post('/api/friday/generate-sessions', {}, config);
+            const response = await axios.post(`${API_BASE_URL}/api/friday/generate-sessions`, {}, config);
             return response.data;
         } catch (error: any) {
             return rejectWithValue(error.response?.data?.message || 'فشل إنشاء الجلسات');

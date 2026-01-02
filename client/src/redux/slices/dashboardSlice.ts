@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { API_BASE_URL } from '../../api/config';
 import type { DashboardData, FinancialSummary } from '../../types';
 import type { RootState } from '../store';
 
@@ -24,7 +25,7 @@ export const fetchDashboard = createAsyncThunk(
         try {
             const token = (getState() as RootState).auth.token;
             const config = { headers: { Authorization: `Bearer ${token}` } };
-            const response = await axios.get('/api/dashboard', config);
+            const response = await axios.get(`${API_BASE_URL}/api/dashboard/stats`, config);
             return response.data.dashboard;
         } catch (error: any) {
             return rejectWithValue(error.response?.data?.message || 'فشل تحميل لوحة التحكم');

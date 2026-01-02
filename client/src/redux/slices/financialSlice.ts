@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import type { RootState } from '../store';
+import { API_BASE_URL } from '../../api/config';
 import type { Subscription, Expense } from '../../types';
 
 interface FinancialState {
@@ -25,7 +26,7 @@ export const createSubscription = createAsyncThunk(
         try {
             const token = (getState() as RootState).auth.token;
             const config = { headers: { Authorization: `Bearer ${token}` } };
-            const response = await axios.post('/api/financial/subscriptions', data, config);
+            const response = await axios.post(`${API_BASE_URL}/api/financial/subscriptions`, data, config);
             return response.data.subscription;
         } catch (error: any) {
             return rejectWithValue(error.response?.data?.message || 'فشل تسجيل الدخل');
@@ -39,7 +40,7 @@ export const createExpense = createAsyncThunk(
         try {
             const token = (getState() as RootState).auth.token;
             const config = { headers: { Authorization: `Bearer ${token}` } };
-            const response = await axios.post('/api/financial/expenses', data, config);
+            const response = await axios.post(`${API_BASE_URL}/api/financial/expenses`, data, config);
             return response.data.expense;
         } catch (error: any) {
             return rejectWithValue(error.response?.data?.message || 'فشل تسجيل المصروف');
