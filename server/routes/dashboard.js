@@ -9,9 +9,10 @@ const { protect } = require('../middleware/auth');
 const router = express.Router();
 
 // @route   GET /api/dashboard
+// @route   GET /api/dashboard/stats
 // @desc    Get dashboard data based on user role
 // @access  Private
-router.get('/', protect, async (req, res) => {
+router.get(['/', '/stats'], protect, async (req, res) => {
     try {
         const today = new Date();
         const dayOfWeek = today.getDay();

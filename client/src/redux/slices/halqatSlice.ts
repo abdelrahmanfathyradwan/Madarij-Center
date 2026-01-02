@@ -67,7 +67,7 @@ export const updateHalqa = createAsyncThunk(
         try {
             const token = (getState() as RootState).auth.token;
             const config = { headers: { Authorization: `Bearer ${token}` } };
-            const response = await axios.put(`/api/halqat/${id}`, data, config);
+            const response = await axios.put(`${API_BASE_URL}/api/halqat/${id}`, data, config);
             return response.data.halqa;
         } catch (error: any) {
             return rejectWithValue(error.response?.data?.message || 'فشل تحديث الحلقة');
@@ -81,7 +81,7 @@ export const deleteHalqa = createAsyncThunk(
         try {
             const token = (getState() as RootState).auth.token;
             const config = { headers: { Authorization: `Bearer ${token}` } };
-            await axios.delete(`/api/halqat/${id}`, config);
+            await axios.delete(`${API_BASE_URL}/api/halqat/${id}`, config);
             return id;
         } catch (error: any) {
             return rejectWithValue(error.response?.data?.message || 'فشل حذف الحلقة');
