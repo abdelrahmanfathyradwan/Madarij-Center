@@ -23,8 +23,7 @@ router.get('/', protect, authorize('director', 'supervisor'), async (req, res) =
             users
         });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'حدث خطأ في الخادم' });
+        next(error);
     }
 });
 
@@ -41,8 +40,7 @@ router.get('/:id', protect, async (req, res) => {
 
         res.json({ success: true, user });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'حدث خطأ في الخادم' });
+        next(error);
     }
 });
 
@@ -76,12 +74,11 @@ router.post('/', protect, authorize('director'), async (req, res) => {
             }
         });
     } catch (error) {
-        console.error(error);
         if (error.name === 'ValidationError') {
             const messages = Object.values(error.errors).map(val => val.message);
             return res.status(400).json({ message: messages.join(', ') });
         }
-        res.status(500).json({ message: 'حدث خطأ في الخادم' });
+        next(error);
     }
 });
 
@@ -104,8 +101,7 @@ router.put('/:id', protect, authorize('director'), async (req, res) => {
 
         res.json({ success: true, user });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'حدث خطأ في الخادم' });
+        next(error);
     }
 });
 
@@ -126,8 +122,7 @@ router.delete('/:id', protect, authorize('director'), async (req, res) => {
 
         res.json({ success: true, message: 'تم إلغاء تفعيل المستخدم' });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'حدث خطأ في الخادم' });
+        next(error);
     }
 });
 

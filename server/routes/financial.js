@@ -101,8 +101,7 @@ router.get('/summary', protect, authorize('director', 'supervisor', 'student_aff
             }
         });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'حدث خطأ في الخادم' });
+        next(error);
     }
 });
 
@@ -128,8 +127,7 @@ router.get('/subscriptions', protect, async (req, res) => {
             subscriptions
         });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'حدث خطأ في الخادم' });
+        next(error);
     }
 });
 
@@ -163,8 +161,7 @@ router.post('/subscriptions', protect, authorize('student_affairs', 'director', 
         if (error.code === 11000) {
             return res.status(400).json({ message: 'الاشتراك موجود بالفعل لهذا الشهر' });
         }
-        console.error(error);
-        res.status(500).json({ message: 'حدث خطأ في الخادم' });
+        next(error);
     }
 });
 
@@ -192,8 +189,7 @@ router.put('/subscriptions/:id', protect, authorize('student_affairs', 'director
 
         res.json({ success: true, subscription });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'حدث خطأ في الخادم' });
+        next(error);
     }
 });
 
@@ -223,8 +219,7 @@ router.get('/expenses', protect, authorize('director', 'supervisor', 'student_af
             expenses
         });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'حدث خطأ في الخادم' });
+        next(error);
     }
 });
 
@@ -251,8 +246,7 @@ router.post('/expenses', protect, authorize('director', 'supervisor', 'student_a
             expense
         });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'حدث خطأ في الخادم' });
+        next(error);
     }
 });
 
@@ -292,8 +286,7 @@ router.post('/generate-monthly', protect, authorize('student_affairs', 'director
             count: subscriptions.length
         });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'حدث خطأ في الخادم' });
+        next(error);
     }
 });
 

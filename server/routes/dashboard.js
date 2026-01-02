@@ -230,8 +230,7 @@ router.get(['/', '/stats'], protect, async (req, res) => {
             dashboard: dashboardData
         });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'حدث خطأ في الخادم' });
+        next(error);
     }
 });
 
