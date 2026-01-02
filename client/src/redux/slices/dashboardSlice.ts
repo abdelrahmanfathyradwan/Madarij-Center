@@ -39,7 +39,7 @@ export const fetchFinancialSummary = createAsyncThunk(
         try {
             const token = (getState() as RootState).auth.token;
             const config = { headers: { Authorization: `Bearer ${token}` } };
-            const response = await axios.get(`/api/financial/summary?year=${year}&month=${month}`, config);
+            const response = await axios.get(`${API_BASE_URL}/api/financial/summary?year=${year}&month=${month}`, config);
             return response.data.summary;
         } catch (error: any) {
             return rejectWithValue(error.response?.data?.message || 'فشل تحميل الملخص المالي');

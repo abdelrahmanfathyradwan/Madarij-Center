@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAppSelector } from '../redux/hooks';
 import { UserPlus, Trash2, Mail, Phone, Shield } from 'lucide-react';
+import { API_BASE_URL } from '../api/config';
 
 interface User {
     _id: string;
@@ -30,7 +31,7 @@ const UsersPage = () => {
     const fetchUsers = async () => {
         setIsLoading(true);
         try {
-            const res = await axios.get('/api/users', {
+            const res = await axios.get(`${API_BASE_URL}/api/users`, {
                 params: { isActive: true },
                 headers: { Authorization: `Bearer ${token}` }
             });
@@ -49,7 +50,7 @@ const UsersPage = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            await axios.post('/api/users', formData, {
+            await axios.post(`${API_BASE_URL}/api/users`, formData, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             alert('تم إضافة المستخدم بنجاح');
@@ -64,7 +65,7 @@ const UsersPage = () => {
     const handleDelete = async (id: string) => {
         if (!window.confirm('هل أنت متأكد من حذف هذا المستخدم؟')) return;
         try {
-            await axios.delete(`/api/users/${id}`, {
+            await axios.delete(`${API_BASE_URL}/api/users/${id}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
             fetchUsers();

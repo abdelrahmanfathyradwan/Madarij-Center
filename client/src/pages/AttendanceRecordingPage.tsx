@@ -11,9 +11,8 @@ import {
     Loader2,
     AlertCircle
 } from 'lucide-react';
-import AttendanceStudentRow from '../components/attendance/AttendanceStudentRow';
-import SessionTimeline from '../components/session/SessionTimeline';
-import type { AttendanceStatus, Student } from '../types';
+import { AttendanceStatus, Student } from '../types';
+import { API_BASE_URL } from '../api/config';
 
 interface AttendanceRecord {
     student: string;
@@ -105,7 +104,7 @@ const AttendanceRecordingPage = () => {
 
     const handleContactParent = (student: Student) => {
         // Open WhatsApp for the student's guardian
-        window.open(`/api/communication/whatsapp-link/${student._id}`, '_blank');
+        window.open(`${API_BASE_URL}/api/communication/whatsapp-link/${student._id}`, '_blank');
     };
 
     if (isLoading) {

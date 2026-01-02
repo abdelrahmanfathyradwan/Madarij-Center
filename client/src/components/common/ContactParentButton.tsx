@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { MessageCircle, ExternalLink, Loader2 } from 'lucide-react';
 import axios from 'axios';
+import { API_BASE_URL } from '../../api/config';
 import type { Student } from '../../types';
 
 interface ContactParentButtonProps {
@@ -31,14 +32,14 @@ const ContactParentButton = ({
 
             // Get WhatsApp link
             const linkResponse = await axios.get(
-                `/api/communication/whatsapp-link/${student._id}`,
+                `${API_BASE_URL}/api/communication/whatsapp-link/${student._id}`,
                 config
             );
 
             const { whatsappUrl, guardian } = linkResponse.data;
 
             // Log communication
-            await axios.post('/api/communication/log', {
+            await axios.post(`${API_BASE_URL}/api/communication/log`, {
                 studentId: student._id,
                 guardianId: guardian._id,
                 communicationType: 'whatsapp',

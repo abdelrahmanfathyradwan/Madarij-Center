@@ -4,6 +4,8 @@ import { useAppSelector } from '../../redux/hooks';
 import type { ExpenseType } from '../../types';
 import { Loader2 } from 'lucide-react';
 
+import { API_BASE_URL } from '../../api/config';
+
 interface RecordExpenseFormProps {
     onSuccess: () => void;
     onCancel: () => void;
@@ -44,7 +46,7 @@ const RecordExpenseForm = ({ onSuccess, onCancel }: RecordExpenseFormProps) => {
                 ...formData,
                 amount: parseFloat(formData.amount),
             };
-            await axios.post('/api/financial/expenses', submitData, config);
+            await axios.post(`${API_BASE_URL}/api/financial/expenses`, submitData, config);
             onSuccess();
         } catch (error) {
             console.error('Error recording expense:', error);

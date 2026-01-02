@@ -56,7 +56,7 @@ export const fetchSession = createAsyncThunk(
         try {
             const token = (getState() as RootState).auth.token;
             const config = { headers: { Authorization: `Bearer ${token}` } };
-            const response = await axios.get(`/api/sessions/${id}`, config);
+            const response = await axios.get(`${API_BASE_URL}/api/sessions/${id}`, config);
             return response.data.session;
         } catch (error: any) {
             return rejectWithValue(error.response?.data?.message || 'فشل تحميل الجلسة');
@@ -84,7 +84,7 @@ export const updateSession = createAsyncThunk(
         try {
             const token = (getState() as RootState).auth.token;
             const config = { headers: { Authorization: `Bearer ${token}` } };
-            const response = await axios.put(`/api/sessions/${id}`, data, config);
+            const response = await axios.put(`${API_BASE_URL}/api/sessions/${id}`, data, config);
             return response.data.session;
         } catch (error: any) {
             return rejectWithValue(error.response?.data?.message || 'فشل تحديث الجلسة');
@@ -98,7 +98,7 @@ export const saveAttendance = createAsyncThunk(
         try {
             const token = (getState() as RootState).auth.token;
             const config = { headers: { Authorization: `Bearer ${token}` } };
-            const response = await axios.post(`/api/sessions/${sessionId}/attendance`, { attendance }, config);
+            const response = await axios.post(`${API_BASE_URL}/api/sessions/${sessionId}/attendance`, { attendance }, config);
             return response.data.attendance;
         } catch (error: any) {
             return rejectWithValue(error.response?.data?.message || 'فشل حفظ الحضور');
@@ -112,7 +112,7 @@ export const savePerformance = createAsyncThunk(
         try {
             const token = (getState() as RootState).auth.token;
             const config = { headers: { Authorization: `Bearer ${token}` } };
-            const response = await axios.post(`/api/sessions/${sessionId}/performance`, { performances }, config);
+            const response = await axios.post(`${API_BASE_URL}/api/sessions/${sessionId}/performance`, { performances }, config);
             return response.data.performances;
         } catch (error: any) {
             return rejectWithValue(error.response?.data?.message || 'فشل حفظ الأداء');
