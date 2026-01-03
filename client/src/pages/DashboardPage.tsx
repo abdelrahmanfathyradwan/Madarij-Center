@@ -373,19 +373,19 @@ const DashboardPage = () => {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-5 animate-slideUp" style={{ animationDelay: '0.4s' }}>
                     <StatCard
                         title="الدخل المحصل"
-                        value={`${financialSummary.income.paid} ج`}
+                        value={`${Number(financialSummary.income.paid).toFixed(2)} ج`}
                         icon={<TrendingUp size={24} />}
                         color="emerald"
                     />
                     <StatCard
                         title="المصروفات"
-                        value={`${financialSummary.expenses.total} ج`}
+                        value={`${Number(financialSummary.expenses.total).toFixed(2)} ج`}
                         icon={<TrendingDown size={24} />}
                         color="red"
                     />
                     <StatCard
                         title="صافي الربح"
-                        value={`${financialSummary.netProfit} ج`}
+                        value={`${Number(financialSummary.netProfit).toFixed(2)} ج`}
                         icon={<DollarSign size={24} />}
                         color={financialSummary.netProfit >= 0 ? 'emerald' : 'red'}
                     />

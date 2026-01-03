@@ -177,19 +177,19 @@ const FinancialPage = () => {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                         <StatCard
                             title="الدخل المحصل"
-                            value={`${financialSummary.income.paid} ج.م`}
+                            value={`${Number(financialSummary.income.paid).toFixed(2)} ج.م`}
                             icon={<TrendingUp size={24} />}
                             color="emerald"
                         />
                         <StatCard
                             title="المصروفات"
-                            value={`${financialSummary.expenses.total} ج.م`}
+                            value={`${Number(financialSummary.expenses.total).toFixed(2)} ج.م`}
                             icon={<TrendingDown size={24} />}
                             color="red"
                         />
                         <StatCard
                             title="صافي الربح"
-                            value={`${financialSummary.netProfit} ج.م`}
+                            value={`${Number(financialSummary.netProfit).toFixed(2)} ج.م`}
                             icon={<DollarSign size={24} />}
                             color={financialSummary.netProfit >= 0 ? 'emerald' : 'red'}
                         />
@@ -204,15 +204,15 @@ const FinancialPage = () => {
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div className="p-4 rounded-lg bg-[var(--bg-card)]">
                                 <p className="text-sm text-[var(--text-secondary)] mb-1">الدخل المتوقع</p>
-                                <p className="text-2xl font-bold text-blue-400">{financialSummary.income.expected} ج.م</p>
+                                <p className="text-2xl font-bold text-blue-400">{Number(financialSummary.income.expected).toFixed(2)} ج.م</p>
                             </div>
                             <div className="p-4 rounded-lg bg-[var(--bg-card)]">
                                 <p className="text-sm text-[var(--text-secondary)] mb-1">المحصل</p>
-                                <p className="text-2xl font-bold text-emerald-400">{financialSummary.income.paid} ج.م</p>
+                                <p className="text-2xl font-bold text-emerald-400">{Number(financialSummary.income.paid).toFixed(2)} ج.م</p>
                             </div>
                             <div className="p-4 rounded-lg bg-[var(--bg-card)]">
                                 <p className="text-sm text-[var(--text-secondary)] mb-1">المتبقي</p>
-                                <p className="text-2xl font-bold text-amber-400">{financialSummary.income.pending} ج.م</p>
+                                <p className="text-2xl font-bold text-amber-400">{Number(financialSummary.income.pending).toFixed(2)} ج.م</p>
                             </div>
                         </div>
                     </div>
@@ -254,7 +254,7 @@ const FinancialPage = () => {
                                 {financialSummary.expenses.breakdown.map((item) => (
                                     <div key={item._id} className="flex items-center justify-between p-3 rounded-lg bg-[var(--bg-card)]">
                                         <span className="font-medium">{item._id}</span>
-                                        <span className="text-red-400 font-bold">{item.total} ج.م</span>
+                                        <span className="text-red-400 font-bold">{Number(item.total).toFixed(2)} ج.م</span>
                                     </div>
                                 ))}
                             </div>
